@@ -24,10 +24,10 @@ jobs:
         run: |
           echo $ASTRA_DB_NAME
           /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exists --wait
-          echo "::set-output name=dbid::$(/home/runner/.astra/cli/astra db list | grep $ASTRA_DB_NAME | awk '{ print $4 }')"
+          echo $(/home/runner/.astra/cli/astra db list | grep $ASTRA_DB_NAME | awk '{ print $4 }') >> $DBID
       - name: Confirm DBID
         run: |
-          echo ${{ steps.dbcreation.outputs.dbid }}
+          echo $DBID
       - name: Enable ACL
         run: |
           curl --request PUT \
