@@ -23,4 +23,10 @@ jobs:
         run: |
           echo $ASTRA_DB_NAME
           /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exists --wait
-          echo $(/home/runner/.astra/cli/astra db list | grep $ASTRA_DB_NAME | awk '{ print $4 }')
+      - name: Enable ACL
+        run: |
+          curl --request PUT \
+          --url "https://api.astra.datastax.com/v2/databases/$(/home/runner/.astra/cli/astra db list | grep $ASTRA_DB_NAME | awk '{ print $4 }')/access-list" \
+          --header 'Accept: application/json' \
+          --header "Authorization: Bearer ${ASTRA_DB_APPLICATION_TOKEN}" \
+          --data '{ "addresses": [], "configurations": { "accessListEnabled": true } }'
