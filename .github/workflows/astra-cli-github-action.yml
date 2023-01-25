@@ -25,7 +25,8 @@ jobs:
         run: |
           echo $ASTRA_DB_NAME
           /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exists --wait
-          echo "dbid=$(/home/runner/.astra/cli/astra db list | grep $ASTRA_DB_NAME | awk '{ print $4 }')" >> $GITHUB_ENV
+          /home/runner/.astra/cli/astra db list | grep $ASTRA_DB_NAME | awk '{ print $4 }
+          echo "dbid=$(/home/runner/.astra/cli/astra db list)" >> $GITHUB_ENV
       - name: Confirm DBID
         run: |
           echo ${{ env.dbid }}
