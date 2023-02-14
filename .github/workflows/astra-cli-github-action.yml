@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Astra CLI
         run: |
-          - echo dbid=$(curl --request GET \
+          echo dbid=$(curl --request GET \
           --url 'https://api.astra.datastax.com/v2/databases' \
           --header 'Accept: application/json' \
           --header "Authorization: Bearer ${ASTRA_DB_APPLICATION_TOKEN}" \
@@ -28,7 +28,7 @@ jobs:
           | grep "\"id\":" \
           | awk '{ print $2 }' \
           | cut -d '"' -f2)
-          - curl -Ls "https://dtsx.io/get-astra-cli" | bash
+          curl -Ls "https://dtsx.io/get-astra-cli" | bash
 
       - name: Create DB
         id: dbcreation
