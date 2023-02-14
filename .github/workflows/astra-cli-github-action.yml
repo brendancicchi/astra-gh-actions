@@ -18,7 +18,17 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Astra CLI
-        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        run: |
+          - echo $(curl --request GET \
+          --url 'https://api.astra.datastax.com/v2/databases' \
+          --header 'Accept: application/json' \
+          --header "Authorization: Bearer ${ASTRA_DB_APPLICATION_TOKEN}" \
+          | python -m json.tool \
+          | grep -B 4 "\"name\": \"${ASTRA_DB_NAME}\"" \
+          | grep "\"id\":" \
+          | awk '{ print $2 }' \
+          | cut -d '"' -f2)
+          - curl -Ls "https://dtsx.io/get-astra-cli" | bash
 
       - name: Create DB
         id: dbcreation
