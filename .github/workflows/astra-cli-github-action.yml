@@ -27,9 +27,9 @@ jobs:
           /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exists --wait
           echo "dbid=$(/home/runner/.astra/cli/astra db list --token $ASTRA_DB_APPLICATION_TOKEN | grep $ASTRA_DB_NAME | awk '{ print $4 }')" >> $GITHUB_ENV
           echo "dump=$(curl --request GET \
-          --url "https://api.astra.datastax.com/v2/databases" \
+          --url \"https://api.astra.datastax.com/v2/databases\" \
           --header 'Accept: application/json' \
-          --header "Authorization: Bearer ${ASTRA_DB_APPLICATION_TOKEN}")" >> $GITHUB_ENV
+          --header \"Authorization: Bearer ${ASTRA_DB_APPLICATION_TOKEN}\")" >> $GITHUB_ENV
       - name: Confirm DBID
         run: |
           echo ${{ env.dbid }}
