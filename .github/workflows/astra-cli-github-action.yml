@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Astra CLI
         run: |
-          - echo $(curl --request GET \
+          - echo dbid=$(curl --request GET \
           --url 'https://api.astra.datastax.com/v2/databases' \
           --header 'Accept: application/json' \
           --header "Authorization: Bearer ${ASTRA_DB_APPLICATION_TOKEN}" \
